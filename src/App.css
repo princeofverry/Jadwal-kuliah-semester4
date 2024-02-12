@@ -1,0 +1,78 @@
+body {
+  background-color: #f5f5f5; /* Warna latar belakang untuk mode terang */
+}
+
+.schedule-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff; /* Warna latar belakang untuk mode terang */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.schedule {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.schedule-item {
+  width: 100%;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+  display: flex;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.schedule-item:hover {
+  background-color: #f0f0f0; /* Warna latar belakang saat dihover */
+}
+
+.day {
+  flex: 0 0 80px;
+  font-weight: bold;
+}
+
+.details {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.course {
+  font-weight: bold;
+}
+
+.info {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.info > div {
+  margin-right: 10px;
+}
+
+@media (min-width: 768px) {
+  .schedule-item {
+    width: calc(50% - 10px);
+    margin-right: 20px;
+  }
+}
+
+/* Tambahkan gaya berikut untuk waktu bold dan menyusun nama dosennya */
+.schedule-item .time {
+  font-weight: bold;
+  margin-bottom: 5px; /* Mengatur jarak antara waktu dan nama dosen */
+}
+
+.schedule-item .lecturers {
+  margin-top: 5px; /* Mengatur jarak antara nama dosen dan lokasi/SKS */
+}
+
+/* Tambahkan gaya berikut untuk memindahkan kredit ke kanan atas */
+.credits {
+  font-weight: bold; /* Membuat teks kredit menjadi tebal */
+  align-self: flex-start; /* Memindahkan kredit ke bagian atas kontainer info */
+}
