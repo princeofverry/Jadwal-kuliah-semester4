@@ -1,5 +1,4 @@
-import React from 'react';
-import './App.css'; // File CSS untuk styling
+import React, { useState } from 'react';
 
 const Schedule = () => {
   // Data jadwal dengan nama dosennya
@@ -17,37 +16,42 @@ const Schedule = () => {
     { id: 11, day: 'Sabtu', course: 'Praktikum Rekayasa Perangkat Lunak', location: 'Lab. Rekayasa Perangkat Lunak', time: '09:00 - 09:50', credits: 1.0, lecturers: ['Ike Pertiwi Windasari, S.T., M.T.', 'Charisma Tubagus Setyobudhi, B.Eng., M.T.'] }
   ];
 
-  // Memisahkan jadwal berdasarkan hari
+  const [currentDate] = useState(new Date()); // Menggunakan useState untuk menginisialisasi tanggal saat ini
+  const [darkMode, setDarkMode] = useState(false); // State untuk mode gelap
+
+  // Mendapatkan hari dari tanggal saat ini
+  const currentDay = currentDate.toLocaleDateString('id-ID', { weekday: 'long' });
+  const currentDateFormatted = currentDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+
   const separatedSchedule = schedule.reduce((acc, curr) => {
     acc[curr.day] = [...(acc[curr.day] || []), curr];
     return acc;
   }, {});
 
   return (
-    <div className="schedule-container">
-      <h2>Jadwal Kuliah</h2>
+    <div className={`schedule-container mx-auto w-full md:px-48 px-4 ${darkMode ? 'dark' : ''} ${darkMode ? 'bg-gray-900' : 'bg-white'}`}>
+      <h2 className={`text-3xl font-bold text-center py-4 ${darkMode ? 'text-[#D0D1D2]' : 'text-black'}`}>Jadwal Kuliah</h2>
+      <p className={`text-lg mb-8 ${darkMode ? 'text-[#D0D1D2]' : ''}`}>Sekarang hari: {currentDay}, {currentDateFormatted}</p>
+      <button className={`top-4 right-4 px-2 py-1 rounded-md ${darkMode ? 'bg-gray-700 text-[#D0D1D2]' : 'bg-gray-200 text-gray-800'}`} onClick={() => setDarkMode(!darkMode)}>
+        {darkMode ? 'Mode Terang' : 'Mode Gelap'}
+      </button>
       {Object.keys(separatedSchedule).map(day => (
-        <div key={day}>
-          <h3>{day}</h3>
-          <div className="schedule">
+        <div key={day} className="pb-8">
+          <h3 className={`text-2xl font-semibold mb-4 ${darkMode ? 'text-[#D0D1D2]' : ''}`}>{day}</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {separatedSchedule[day].map(item => (
-              <div key={item.id} className="schedule-item">
-                {/* <div className="day">{item.day}</div> */}
-                <div className="details">
-                  <div className="course">{item.course}</div>
-                  <div className="info">
-                    <div className="location">{item.location}</div>
-                    <div className="time">{item.time}</div>
-                    <div className="lecturers">
-                      <p>Dosen:</p>
-                      <ul>
-                        {item.lecturers.map((lecturer, index) => (
-                          <li key={index}>{lecturer}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="credits">{item.credits} SKS</div>
-                  </div>
+              <div key={item.id} className={`bg-gray-100 hover:bg-gray-300 rounded p-4 flex items-center ${darkMode ? 'dark:bg-[#1C1F23] dark:hover:bg-[#1b2b3b]' : ''}`}>
+                <div className="flex-grow">
+                  <div className={`font-semibold ${darkMode ? 'text-white' : 'text-[#da00e8]'}`}>{item.course}</div>
+                  <div className={`text-sm ${darkMode ? 'text-gray-300' : ''}`}>{item.location}</div>
+                  <div className={`text-sm ${darkMode ? 'text-gray-300' : ''}`}>{item.time}</div>
+                  <div className={`text-sm ${darkMode ? 'text-gray-300' : ''}`}>Dosen:</div>
+                  <ul className={`list-disc list-inside ${darkMode ? 'text-gray-300' : ''}`}>
+                    {item.lecturers.map((lecturer, index) => (
+                      <li key={index} className={`text-sm ${darkMode ? 'text-gray-300' : ''}`}>{lecturer}</li>
+                    ))}
+                  </ul>
+                  <div className={`text-sm ${darkMode ? 'text-gray-300' : ''}`}>{item.credits} SKS</div>
                 </div>
               </div>
             ))}
